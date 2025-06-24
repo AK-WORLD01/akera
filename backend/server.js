@@ -1,16 +1,18 @@
+const express = require('express'); // Add this import
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const sanitizeHtml = require('sanitize-html');
+const mysql = require('mysql2/promise'); // Also ensure mysql2 is imported
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Use FRONTEND_URL from .env
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
