@@ -1,5 +1,3 @@
-const express = require('express');
-const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -12,19 +10,18 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL, // Use FRONTEND_URL from .env
   credentials: true
 }));
 
 // Validate environment variables
-const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'DB_PORT', 'JWT_SECRET'];
+const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'DB_PORT', 'JWT_SECRET', 'FRONTEND_URL'];
 for (const envVar of requiredEnvVars) {
   if (!process.env[envVar]) {
     console.error(`Missing environment variable: ${envVar}`);
     process.exit(1);
   }
 }
-
 // Load CA certificate
 let caCert;
 try {
